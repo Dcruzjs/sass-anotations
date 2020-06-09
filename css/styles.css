@@ -1,0 +1,97 @@
+@charset "UTF-8";
+/************************************\
+*   Este es un comentario.
+\************************************\
+/**
+* Main color
+*/
+.div {
+  background-color: green;
+}
+
+.h1 {
+  color: green;
+}
+
+/****************************************\
+*       MIXINS
+****************************************/
+/*
+*   Son trozos de código que se pueden repetir.
+*   También admiten variables.
+*/
+section {
+  /*Mixin fijo*/
+  max-width: 200px;
+  /*Mixin variable*/
+  max-width: 500px;
+  background-color: green;
+}
+
+/****************************************\
+*       EXTENSIONES
+****************************************/
+/*
+*   Se usan para evitar repetir código, juntan todo en un solo bloque.
+*   Se tiene que agregar como atributo en un bloque para que el selector tome los atributos de la extension.
+*   Un bloque que será extendido se indica con un "%" y se llama con "@extend"
+*/
+.main-page, .secondary-page {
+  max-width: 1024px;
+  background-color: purple;
+  border: 2px solid yellow;
+}
+
+.main-page {
+  color: green;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.secondary-page {
+  color: blue;
+  display: -ms-grid;
+  display: grid;
+}
+
+/****************************************\
+*       @CONTENT
+****************************************/
+/*
+*   Permite añadir un bloque de código a un mixin, lo que permite más programación.
+*   En este ejemplo aprovechamos los media-queries y la forma en la que sass compila las anidaciones
+*   para crear un query a un ancho variable.
+*/
+section {
+  height: 100px;
+  width: 200px;
+}
+
+@media screen and (max-width: 1024px) {
+  section {
+    background-color: white;
+  }
+}
+
+/****************************************\
+*       FUNCIONES
+****************************************/
+div {
+  /*Resultado de suma(25px, 30px)*/
+  width: 55px;
+}
+
+/****************************************\
+*       ARRAYS
+****************************************/
+/*
+*   Permiten guardar una serie de variables en un solo arreglo.
+*   Se declara como a una variable y se agregan los datos como "key : value," separados por comas
+*   Se llaman con map-get(array-name, key)
+*/
+p {
+  /*  Se obtiene (normal: 16px) del array con nombre $font-size   */
+  font-size: 16px;
+}
+/*# sourceMappingURL=styles.css.map */

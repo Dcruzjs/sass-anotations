@@ -1,0 +1,120 @@
+@import "lib/variables";
+
+//Sintaxis para definir variables.
+$color : red!default;
+$color2 : blue!default;
+$color3 : green!default;
+
+.div {
+    background-color: $color-brand;
+}
+
+
+//  Esta sintaxis es para anadir un archivo a el documento que se va a compilar.
+//  Para especificar que un archivo no debe compilarse, colocamos un "_" al inicio del nombre (e.g _main.scss)
+//  Solo es necesario colocar el path, la extension o el _ pueden ser omitidos.
+@import "main";
+
+/****************************************\
+*       MIXINS
+****************************************/
+/*
+*   Son trozos de código que se pueden repetir.
+*   También admiten variables.
+*/
+@mixin max-width {
+    /*Mixin fijo*/
+    max-width: 200px; 
+}
+@mixin var_width($width) {
+    /*Mixin variable*/
+    max-width: $width; 
+}
+section {
+    @include max-width;
+    @include var-width(500px);
+    background-color: $color-brand;
+}
+
+/****************************************\
+*       EXTENSIONES
+****************************************/
+/*
+*   Se usan para evitar repetir código, juntan todo en un solo bloque.
+*   Se tiene que agregar como atributo en un bloque para que el selector tome los atributos de la extension.
+*   Un bloque que será extendido se indica con un "%" y se llama con "@extend"
+*/
+
+%container {
+    max-width: 1024px;
+    background-color: purple;
+    border: 2px solid yellow;
+}
+
+.main-page {
+    @extend %container;
+    color:green;
+    display: flex;
+}
+
+.secondary-page {
+    @extend %container;
+    color:blue;
+    display: grid;
+}
+
+/****************************************\
+*       @CONTENT
+****************************************/
+/*
+*   Permite añadir un bloque de código a un mixin, lo que permite más programación.
+*   En este ejemplo aprovechamos los media-queries y la forma en la que sass compila las anidaciones
+*   para crear un query a un ancho variable.
+*/
+@mixin responsive($width){
+    @media screen and (max-width:$width){
+        @content
+    }
+}
+
+section {
+    height: 100px;
+    width: 200px;
+    @include responsive(1024px) {
+        background-color: white;
+    }
+}
+
+/****************************************\
+*       FUNCIONES
+****************************************/
+
+@function suma($num1, $num2) {
+    @return $num1 + $num2;
+}
+
+div {
+    /*Resultado de suma(25px, 30px)*/
+    width: suma(25px, 30px) 
+}
+
+/****************************************\
+*       ARRAYS
+****************************************/
+/*
+*   Permiten guardar una serie de variables en un solo arreglo.
+*   Se declara como a una variable y se agregan los datos como "key : value," separados por comas
+*   Se llaman con map-get(array-name, key)
+*/
+
+$font-size : (
+    big: 24px,
+    normal: 16px,
+    small: 14px,
+    x-small: 12px,
+);
+
+p {
+    /*  Se obtiene (normal: 16px) del array con nombre $font-size   */
+    font-size: map-get($font-size, normal);
+}
